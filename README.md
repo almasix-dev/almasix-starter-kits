@@ -40,7 +40,9 @@ pip install -e packages/api
 pip install -e packages/spa
 ```
 
-Requires a recent Almasix that supports `Kit.stub_root` and `almasix.kits` discovery.
+Requires a recent Almasix (**≥ 0.9.4**) that supports `Kit.stub_root` and `almasix.kits` discovery.
+
+See [PUBLISHING.md](PUBLISHING.md) to cut a PyPI release.
 
 ## License
 
