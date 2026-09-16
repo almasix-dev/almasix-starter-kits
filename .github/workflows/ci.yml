@@ -19,7 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Almasix (kits need Kit.stub_root)
-        run: pip install "almasix>=0.9.3" build
       - name: Build ${{ matrix.package }}
-        run: python -m build "packages/${{ matrix.package }}"
+        run: |
+          pip install build twine
+          python -m build "packages/${{ matrix.package }}"
+          twine check --strict "packages/${{ matrix.package }}/dist/"*
