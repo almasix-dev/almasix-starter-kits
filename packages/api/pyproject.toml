@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "almasix-starter-kit-api"
-version = "0.1.0"
+version = "0.1.1"
 description = "Almasix API starter kit — Signet PAT overlays for almasix new --kit api"
 requires-python = ">=3.11"
 license = "MIT"

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "almasix-starter-kit-web"
-version = "0.1.0"
+version = "0.1.1"
 description = "Almasix Web starter kit — Prism + Conduit overlays for almasix new --kit web"
 requires-python = ">=3.11"
 license = "MIT"

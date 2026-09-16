@@ -2,7 +2,7 @@
 
 Each of `almasix-starter-kit-web`, `almasix-starter-kit-api`, and
 `almasix-starter-kit-spa` is versioned together in this monorepo (currently
-**0.1.0**).
+**0.1.1**).
 
 ## Why three workflows?
 
@@ -28,14 +28,14 @@ file per package so all three can be registered before the first upload.
 
 ```bash
 # After Almasix 0.9.4 is on PyPI and versions in packages/*/pyproject.toml match:
-git tag v0.1.0
-git push origin v0.1.0
-gh release create v0.1.0 --title "v0.1.0" --notes "Initial starter-kit packages."
+git tag v0.1.1
+git push origin v0.1.1
+gh release create v0.1.1 --title "v0.1.1" --notes "Publish workflows split for PyPI pending publishers."
 ```
 
 A published GitHub Release runs all three Publish workflows.
 
-If `v0.1.0` already exists: Actions → run **Publish web** / **Publish api** /
+If `v0.1.1` already exists: Actions → run **Publish web** / **Publish api** /
 **Publish spa** with target `pypi` (after the pending publishers are registered).
 
 ## Manual / TestPyPI
