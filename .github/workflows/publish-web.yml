@@ -1,0 +1,53 @@
+name: Publish web
+
+# Trusted Publishing pending publishers are unique per (repo, workflow, environment).
+# One workflow file per package so all three kits can be registered as pending.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Index to publish to
+        type: choice
+        options: [testpypi, pypi]
+        default: testpypi
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish almasix-starter-kit-web
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    environment: ${{ github.event_name == 'release' && 'pypi' || (inputs.target == 'pypi' && 'pypi' || 'testpypi') }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Build
+        run: |
+          pip install build twine
+          python -m build packages/web
+          twine check --strict packages/web/dist/*
+      - name: Tag must match package version
+        if: github.event_name == 'release'
+        run: |
+          packaged=$(python -c "import tomllib, pathlib; print(tomllib.loads(pathlib.Path('packages/web/pyproject.toml').read_text())['project']['version'])")
+          tagged="${GITHUB_REF_NAME#v}"
+          test "$packaged" = "$tagged"
+      - name: Publish to PyPI
+        if: github.event_name == 'release' || inputs.target == 'pypi'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: packages/web/dist/
+      - name: Publish to TestPyPI
+        if: github.event_name == 'workflow_dispatch' && inputs.target == 'testpypi'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          packages-dir: packages/web/dist/
